@@ -43,13 +43,17 @@ vm-secom-poc/
 - **시간drift**: fab 분포 변화 → 시간 기반 split 옵션 제공 (랜덤 split의 낙관 편향 회피)
 - **설명가능성**: SHAP로 상위 센서 → "어느 공정 단계가 불량을 주도하는가" 공정 인사이트
 
-## 결과 (실행 후 채움)
+## 결과 (5-fold stratified CV)
 | model | PR-AUC | ROC-AUC | Recall@P=0.5 |
 |---|---|---|---|
-| logreg | – | – | – |
-| pls | – | – | – |
-| rf | – | – | – |
-| xgb | – | – | – |
+| **rf** (RandomForest) | **0.196** | **0.728** | 0.057 |
+| pls (Virtual Metrology 고전) | 0.164 | 0.690 | 0.048 |
+| logreg | 0.149 | 0.663 | 0.029 |
+
+- 데이터: 1,567 웨이퍼 × 590 센서, 불량률 **6.6%**
+- **no-skill 기준 PR-AUC = 0.066** (불량률) → 모든 모델이 약 **2.2~3.0배** 개선
+- SECOM은 난도 높은 벤치마크 — 절대 수치보다 **누수 없는 평가·불균형 정직성**이 포인트
+- `xgb`/`lgbm`은 설치 시 자동 추가 (`pip install xgboost lightgbm`)
 
 ## 확장
 - 비지도 이상탐지(IsolationForest·AutoEncoder)로 라벨 없는 FDC

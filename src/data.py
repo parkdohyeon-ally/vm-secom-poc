@@ -21,12 +21,11 @@ def load_secom():
     X = pd.read_csv(feat_path, sep=r"\s+", header=None, na_values="NaN")
     X.columns = [f"f{i:03d}" for i in range(X.shape[1])]
 
-    lab = pd.read_csv(lab_path, sep=r"\s+", header=None)
-    # col0 = label {-1 pass, 1 fail}; col1 = date; col2 = time
+    # label col, then a quoted "DD/MM/YYYY HH:MM:SS" timestamp col
+    lab = pd.read_csv(lab_path, sep=r"\s+", header=None, quotechar='"')
     y = lab[0].map({-1: 0, 1: 1}).astype(int).rename("fail")
     ts = pd.to_datetime(
-        lab[1].astype(str) + " " + lab[2].astype(str),
-        format="%d/%m/%Y %H:%M:%S", errors="coerce",
+        lab[1].astype(str), format="%d/%m/%Y %H:%M:%S", errors="coerce",
     ).rename("ts")
     return X, y, ts
 
