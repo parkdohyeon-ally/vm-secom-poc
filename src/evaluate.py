@@ -5,6 +5,7 @@ from sklearn.base import clone
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import (
     average_precision_score, roc_auc_score, precision_recall_curve,
+    matthews_corrcoef,
 )
 
 
@@ -22,6 +23,21 @@ def recall_at_precision(y, scores, min_precision=0.5):
     return float(r[:-1][mask].max()) if mask.any() else 0.0
 
 
+def best_mcc(y, scores, n_grid=200):
+    """Max Matthews correlation coefficient over thresholds (Bosch's metric).
+
+    MCC needs hard labels, so we sweep candidate thresholds and report the
+    best. Returns (mcc, threshold).
+    """
+    grid = np.unique(np.quantile(scores, np.linspace(0, 1, n_grid)))
+    best_m, best_t = -1.0, 0.5
+    for t in grid:
+        m = matthews_corrcoef(y, (scores >= t).astype(int))
+        if m > best_m:
+            best_m, best_t = m, t
+    return float(best_m), float(best_t)
+
+
 def cross_val_report(name, estimator, X, y, n_splits=5, seed=42, min_precision=0.5):
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
     rows = []
@@ -31,9 +47,11 @@ def cross_val_report(name, estimator, X, y, n_splits=5, seed=42, min_precision=0
         m = clone(estimator)
         m.fit(Xtr, ytr)
         s = get_scores(m, Xte)
+        mcc, _ = best_mcc(yte, s)
         rows.append({
             "pr_auc": average_precision_score(yte, s),
             "roc_auc": roc_auc_score(yte, s),
+            "mcc": mcc,
             f"recall@p{int(min_precision*100)}": recall_at_precision(yte, s, min_precision),
         })
     mean = pd.DataFrame(rows).mean().round(4).to_dict()
