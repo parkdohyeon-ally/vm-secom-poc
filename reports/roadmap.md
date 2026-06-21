@@ -19,10 +19,12 @@
 - `notebooks/07_phm_cmp_vm.ipynb` — 회귀 파이프라인 재사용, RMSE·R²·parity
 - `src/regression.py`의 합성 데이터를 **실제 CMP 제거율**로 교체 (PHM 데이터 받으면 그대로 실행)
 
-### 3단계 — WM-811K (이미지)
-- 웨이퍼맵 → 결함패턴 9종 분류 (CNN, 1D→2D)
-- `src/datasets/wm811k.py` + `notebooks/07_wafermap_cnn.ipynb`
-- 사업성: 자동 결함 진단 → 근본원인 추적
+### 3단계 — WM-811K (이미지) — 코드 완료, 데이터 대기
+- `src/datasets/wm811k.py` — LSWMD.pkl 로더, 가변맵 → 64×64 리사이즈
+- `src/cnn.py` — PyTorch CNN, 클래스 가중 손실, macro-F1
+- `notebooks/08_wafermap_cnn.ipynb` — 학습·평가·혼동행렬
+- `requirements-cnn.txt` (torch 등 별도, 코어 경량 유지)
+- 사업성: 웨이퍼맵 결함패턴 자동 분류 → 근본원인 추적
 
 ## 제품화 패키징 (진행)
 - [x] **FastAPI 서빙** `serve.py` (`/predict`, `/health`)
