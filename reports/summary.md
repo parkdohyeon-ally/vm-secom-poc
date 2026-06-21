@@ -33,4 +33,4 @@
 ## 이력서 한 줄
 > **디스플레이 공정 데이터를 가상계측(VM) 문제로 모델링** — fab 센서 590변수 기반 수율 분류(PR-AUC 0.20, no-skill 대비 3×)와 막두께 회귀(PLS R² 0.95) PoC를 누수 없는 평가 파이프라인으로 구현. 박막 계측 도메인 + ML 융합.
 
-깃허브: `github.com/<id>/vm-secom-poc`
+깃허브: `github.com/parkdohyeon-ally/vm-secom-poc`
