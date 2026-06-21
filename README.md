@@ -79,5 +79,18 @@ streamlit run app.py
 - **회귀 VM**: 연속 계측값(막두께·CD) 예측 → RMSE·R² (정통 Virtual Metrology)
 - Streamlit 데모: 센서 입력 → 예측 + SHAP
 
+## 제품화 / 서빙
+- **REST API** (FastAPI): `uvicorn serve:app` → `POST /predict` (센서 dict → 불량확률), `/docs`
+- **ROI 계산기**: `python -m src.roi` — recall을 월 $ 절감으로 환산
+  - 예: 50k wafer/월, 캐치당 $400, 불량 6.6%, recall 0.40 → **순절감 ≈ $527k/월**
+- **Model Card**: [MODEL_CARD.md](MODEL_CARD.md) — 용도·메트릭·한계·운영
+- **대시보드**: `streamlit run app.py`
+
+## 대규모 확장 (로드맵)
+신뢰성·규모 확장 — [reports/roadmap.md](reports/roadmap.md)
+1. **Bosch Production Line** (1.18M×968) — `src/datasets/bosch.py` (샘플/청크 로더)
+2. **PHM2016 CMP** — 실제 반도체 회귀 VM (합성 대체)
+3. **WM-811K** (811k 웨이퍼맵) — 결함패턴 CNN
+
 ## 라이선스
 MIT

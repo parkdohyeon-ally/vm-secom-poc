@@ -32,7 +32,7 @@ pipe, X, y = load()
 
 idx = st.slider("웨이퍼 선택 (index)", 0, len(X) - 1, 0)
 row = X.iloc[[idx]]
-prob = float(pipe.predict_proba(row)[:, 1])
+prob = float(pipe.predict_proba(row)[0, 1])
 actual = "FAIL" if y.iloc[idx] == 1 else "PASS"
 
 c1, c2, c3 = st.columns(3)
