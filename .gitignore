@@ -3,6 +3,10 @@ data/raw/
 *.csv
 !reports/*.csv
 
+# model artifacts (regenerate via src/train_save.py)
+models/
+*.joblib
+
 # python
 __pycache__/
 *.py[cod]

@@ -31,9 +31,19 @@ vm-secom-poc/
 │  ├─ data.py            # 로드·라벨·타임스탬프
 │  ├─ features.py        # 전처리(결측drop·대체·분산·스케일) — 누수 없는 Pipeline
 │  ├─ models.py          # logreg / PLS / RF / XGBoost / LightGBM
-│  └─ evaluate.py        # PR-AUC·ROC-AUC·Recall@정밀도, 누수 없는 CV
+│  ├─ evaluate.py        # PR-AUC·ROC-AUC·Recall@정밀도, 누수 없는 CV
+│  ├─ regression.py      # 회귀 VM (막두께 예측) — PLS/RF/GBM, RMSE·R²
+│  └─ train_save.py      # 모델 아티팩트 저장(streamlit용)
 ├─ run_baseline.py       # 엔드투엔드 실행
-└─ notebooks/            # 01_eda · 02_preprocess · 03_models · 04_explain(SHAP)
+├─ app.py                # Streamlit 데모 (센서 → 불량확률 + 중요 센서)
+├─ reports/summary.md    # 1페이지 요약 + 이력서 한 줄
+└─ notebooks/            # 01_eda · 02_preprocess · 03_models · 04_explain(SHAP) · 05_regression_vm
+```
+
+### Streamlit 데모
+```bash
+python -m src.train_save     # 모델 저장 -> models/vm_model.joblib
+streamlit run app.py
 ```
 
 ## 방법론에서 신경 쓴 것 (성숙도 포인트)
@@ -54,6 +64,15 @@ vm-secom-poc/
 - **no-skill 기준 PR-AUC = 0.066** (불량률) → 모든 모델이 약 **2.2~3.0배** 개선
 - SECOM은 난도 높은 벤치마크 — 절대 수치보다 **누수 없는 평가·불균형 정직성**이 포인트
 - `xgb`/`lgbm`은 설치 시 자동 추가 (`pip install xgboost lightgbm`)
+
+### 회귀 VM (막두께 예측, 5-fold CV)
+| model | RMSE (nm) | R² |
+|---|---|---|
+| **PLS** | **1.78** | **0.953** |
+| GBM | 2.55 | 0.905 |
+| RF | 3.53 | 0.819 |
+
+공선성 큰 공정 데이터에서 **PLS(VM 고전 기법)가 1위** — 도메인 정합 결과. (`python -m src.regression`)
 
 ## 확장
 - 비지도 이상탐지(IsolationForest·AutoEncoder)로 라벨 없는 FDC
