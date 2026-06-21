@@ -1,0 +1,11 @@
+.venv/
+venv/
+data/raw/
+models/
+notebooks/
+reports/
+__pycache__/
+**/__pycache__/
+*.pyc
+.git/
+.ipynb_checkpoints/

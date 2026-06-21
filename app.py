@@ -16,13 +16,10 @@ st.set_page_config(page_title="Virtual Metrology · SECOM", layout="wide")
 st.title("Virtual Metrology · 웨이퍼 불량 예측")
 st.caption("fab 장비 센서 → 불량 확률 · 디스플레이 AI 자율실험실 → 반도체 VM PoC")
 
-if not MODEL.exists():
-    st.error("모델 아티팩트 없음 — 먼저 `python -m src.train_save` 실행하세요.")
-    st.stop()
-
-
 @st.cache_resource
 def load():
+    from src.bootstrap import ensure_ready
+    ensure_ready()                       # download data + train model if missing
     art = joblib.load(MODEL)
     X, y, ts = load_secom()
     return art["pipe"], X, y
