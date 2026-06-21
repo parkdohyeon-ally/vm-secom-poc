@@ -1,0 +1,7 @@
+line-length = 100
+target-version = "py311"
+extend-exclude = ["notebooks", "deploy", ".venv", "data"]
+
+[lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]  # line length handled loosely for notebooks/readability

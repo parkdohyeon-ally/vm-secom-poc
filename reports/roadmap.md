@@ -14,9 +14,10 @@
 - 포인트: **out-of-core**(청크 집계)·극불균형(0.58%)·**MCC**(Bosch 공식 지표) 추가
 - 다운로드: `kaggle competitions download -c bosch-production-line-performance -f train_numeric.csv.zip -p data/raw`
 
-### 2단계 — PHM2016 CMP (회귀)
-- `src/regression.py`의 합성 데이터를 **실제 CMP 제거율**로 교체
-- 타깃: removal rate, 평가 RMSE·R² (정통 VM)
+### 2단계 — PHM2016 CMP (회귀) — 코드 완료, 데이터 대기
+- `src/datasets/phm_cmp.py` — 센서 트레이스 → wafer 단위 집계 로더
+- `notebooks/07_phm_cmp_vm.ipynb` — 회귀 파이프라인 재사용, RMSE·R²·parity
+- `src/regression.py`의 합성 데이터를 **실제 CMP 제거율**로 교체 (PHM 데이터 받으면 그대로 실행)
 
 ### 3단계 — WM-811K (이미지)
 - 웨이퍼맵 → 결함패턴 9종 분류 (CNN, 1D→2D)

@@ -7,6 +7,9 @@ data/raw/
 models/
 *.joblib
 
+# deploy bundle (build artifact, copies of tracked files)
+deploy/space/
+
 # python
 __pycache__/
 *.py[cod]

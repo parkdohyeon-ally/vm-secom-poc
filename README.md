@@ -1,5 +1,12 @@
 # Virtual Metrology PoC — Fab Sensor → Yield/Quality Prediction
 
+[![CI](https://github.com/parkdohyeon-ally/vm-secom-poc/actions/workflows/ci.yml/badge.svg)](https://github.com/parkdohyeon-ally/vm-secom-poc/actions/workflows/ci.yml)
+[![🤗 Live Demo](https://img.shields.io/badge/%F0%9F%A4%97-Live%20Demo-blue)](https://huggingface.co/spaces/parkdohyeon-ally/vm-secom-demo)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+**라이브 데모**: https://huggingface.co/spaces/parkdohyeon-ally/vm-secom-demo *(배포 후 활성)*
+
 반도체 fab 장비 센서 데이터로 웨이퍼 품질(양/불량)을 예측하는 **Virtual Metrology / FDC(Fault Detection & Classification)** 계열 PoC.
 전수 계측이 불가능한 fab에서 "안 재고도 품질을 추정"하는 문제를 다룬다.
 
